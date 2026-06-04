@@ -1,6 +1,9 @@
 import 'dotenv/config';
+import cors from 'cors';
 import mongoose from 'mongoose';
 import { app } from './app.js';
+
+app.use(cors());
 
 mongoose
   .connect(process.env.MONGO_URL_PROD)
