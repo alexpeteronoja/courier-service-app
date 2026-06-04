@@ -1,0 +1,48 @@
+{
+  "env": {
+    "node": true,
+    "es2021": true
+  },
+  "extends": [
+    "airbnb-base",
+    "plugin:node/recommended",
+    "plugin:prettier/recommended"
+  ],
+  "parserOptions": {
+    "ecmaVersion": 2021,
+    "sourceType": "module"
+  },
+  "rules": {
+    "prettier/prettier": "off",
+    "no-console": "off",
+    "consistent-return": "off",
+    "func-names": "off",
+    "object-shorthand": "off",
+    "no-process-exit": "off",
+    "no-param-reassign": ["error", { "props": false }],
+    "no-return-await": "off",
+    "no-underscore-dangle": "off",
+    "class-methods-use-this": "off",
+    "semi": "off",
+
+    "import/order": "off",
+    "import/extensions": "off",
+    "import/prefer-default-export": "off",
+
+    "prefer-destructuring": ["error", { "object": true, "array": false }],
+    "no-unused-vars": ["error", { "argsIgnorePattern": "req|res|next|_" }],
+
+    "no-throw-literal": "error",
+    "no-async-promise-executor": "error",
+    "node/no-unsupported-features/es-syntax": "off",
+    "no-plusplus": ["error", { "allowForLoopAfterthoughts": true }]
+
+    // "node/no-unsupported-features/es-syntax": [
+    //   "error",
+    //   {
+    //     "ignores": ["rest/spread"]
+    //   }
+    // ]
+  },
+  "ignorePatterns": ["node_modules/", "dist/", "build/"]
+}

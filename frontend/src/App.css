@@ -1,0 +1,30 @@
+@import url("https://fonts.googleapis.com/css2?family=Jost:ital,wght@0,100..900;1,100..900&family=Lora:ital,wght@0,400..700;1,400..700&family=Manrope:wght@200..800&family=Montserrat:ital,wght@0,100..900;1,100..900&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap");
+@import "tailwindcss";
+
+@theme {
+  --font-poppins: "Poppins", sans-serif;
+  --font-nunito: "Nunito", sans-serif;
+  --color-primary: #20186d;
+  --color-accent: #ea960a;
+  --color-background: #f5f7fa;
+  --color-textcol: #1e1e1e;
+}
+
+body {
+  font-family: "Poppins", sans-serifs;
+  font-weight: 400;
+  font-style: normal;
+  font-size: 16px;
+}
+
+.Toastify__progress-bar {
+  background: #20186d !important;
+}
+
+.Toastify__toast--success {
+  --toastify-icon-color-success: #20186d;
+}
+
+.Toastify__progress-bar--success {
+  background: #20186d !important;
+}
