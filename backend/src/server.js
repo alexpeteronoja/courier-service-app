@@ -12,6 +12,6 @@ mongoose
     console.log('Error Connecting DB', err);
   });
 
-app.listen(process.env.NODE || 3000, () => {
+app.listen(process.env.PORT || 3000, () => {
   console.log('Server Started at port 3000');
 });
