@@ -3,7 +3,7 @@ import cors from 'cors';
 import mongoose from 'mongoose';
 import { app } from './app.js';
 
-app.use(cors());
+app.use(cors({ origin: 'http://localhost:5173' }));
 
 mongoose
   .connect(process.env.MONGO_URL_PROD)
