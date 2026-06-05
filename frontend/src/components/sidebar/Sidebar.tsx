@@ -27,13 +27,13 @@ function Sidebar() {
       )}
 
       <div
-        className={`fixed top-0 left-0 px-6 pb-12 w-[290px] h-screen flex flex-col justify-between gap-y-30 overflow-y-auto no-scrollbar z-50 transform transition-transform ease-in-out duration-300 ${sideBarisOpen ? "translate-x-0" : "-translate-x-full"} lg:translate-x-0 bg-[#fff]`}
+        className={`fixed top-0 left-0 px-6 pb-12 w-72.5 h-screen flex flex-col justify-between gap-y-30 overflow-y-auto no-scrollbar z-50 transform transition-transform ease-in-out duration-300 ${sideBarisOpen ? "translate-x-0" : "-translate-x-full"} lg:translate-x-0 bg-primary text-white`}
       >
         <div className="relative">
           <div className="py-8">
             <div className="flex items-center gap-2 w-full max-w-34">
               <span className="bg-[#0c5aa6] text-white p-2 rounded-lg">
-                <Package className="w-8 h-8 text-primary font-bold" />
+                <Package className="w-8 h-8 text-white font-bold" />
               </span>
               <span className="text-xl font-bold">
                 <Link to="/">FastLink</Link>
@@ -55,7 +55,7 @@ function Sidebar() {
 
         <div>
           <Link to="/payment">
-            <div className="flex gap-x-3 p-2 items-center text-[#13064E]">
+            <div className="flex gap-x-3 p-2 items-center text-white">
               <div>
                 <CreditCard />
               </div>
@@ -63,14 +63,14 @@ function Sidebar() {
             </div>
           </Link>
 
-          <div className="flex gap-x-3 p-2 items-center text-[#13064E]">
+          <div className="flex gap-x-3 p-2 items-center text-white">
             <div>
               <CircleQuestionMark />
             </div>
             <div className="font-medium">Support</div>
           </div>
 
-          <div className="flex gap-x-3 p-2 items-center text-[#13064E]">
+          <div className="flex gap-x-3 p-2 items-center text-white">
             <div>
               <Settings />
             </div>

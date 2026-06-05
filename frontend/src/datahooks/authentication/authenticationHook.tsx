@@ -34,9 +34,9 @@ export const useUserLogin = () => {
   >({
     mutationFn: (data) => ApiInstance.post("/auth/login", data),
     onSuccess: async (response) => {
-      const userRole = response?.data?.data?.user_type;
-      const userId = response?.data?.data?.id;
-      const userEmail = response?.data?.data?.email;
+      const userRole = response?.data?.data?.user?.role;
+      const userId = response?.data?.data?.user?._id;
+      const userEmail = response?.data?.data?.user?.email;
 
       // Clear Previous Access Token and Role to Avoid Conflict\
       Cookies.remove("userAccessToken");
@@ -47,7 +47,7 @@ export const useUserLogin = () => {
 
       try {
         if (userRole) {
-          Cookies.set("userAccessToken", response?.data?.data?.access_token, {
+          Cookies.set("userAccessToken", response?.data?.data?.accessToken, {
             secure: true,
             sameSite: "None",
           });

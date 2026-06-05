@@ -1,17 +1,31 @@
-import { Eye, EyeOff, Package } from "lucide-react";
-import { useState } from "react";
-import { Link } from "react-router-dom";
-import { notifyError } from "../../utils/toast";
-import { useUserLogin } from "../../datahooks/authentication/authenticationHook";
+import { Eye, EyeOff, Loader2, Package } from "lucide-react";
+import { useEffect, useState } from "react";
+import { Link, useNavigate } from "react-router-dom";
+import { notifyError } from "../utils/toast";
+import { useUserLogin } from "../datahooks/authentication/authenticationHook";
+import axios from "axios";
+import withAuth from "../api/withAuth";
 
 function Login() {
   const [email, setEmail] = useState<string>("");
   const [password, setPassword] = useState<string>("");
   const [showPassword, setShowPassword] = useState<boolean>(false);
+  const { isAuthenticated } = withAuth();
+  const navigate = useNavigate();
 
   const Icon = showPassword ? Eye : EyeOff;
 
-  const { signinMutateAsync } = useUserLogin();
+  const { signinMutateAsync, signinPending } = useUserLogin();
+
+  // navagation to dashboard
+
+  useEffect(() => {
+    if (isAuthenticated) {
+      navigate("/dashboard", { replace: true });
+    } else {
+      navigate("/admin");
+    }
+  });
 
   // Handle Signin
 
@@ -35,7 +49,12 @@ function Login() {
       });
       console.log(res);
     } catch (err) {
-      console.log(err);
+      if (axios.isAxiosError(err)) {
+        console.log("my error", err.response);
+        notifyError(err.response?.data?.message);
+      } else {
+        console.log(err);
+      }
     }
   };
 
@@ -105,9 +124,13 @@ function Login() {
               <div className="mt-6">
                 <button
                   type="submit"
-                  className="w-full rounded-[10px] bg-accent py-3"
+                  className="w-full flex justify-center items-center cursor-pointer rounded-[10px] bg-accent py-3"
                 >
-                  Sign in
+                  {signinPending ? (
+                    <Loader2 className="animate-spin duration-300" />
+                  ) : (
+                    "Sign in"
+                  )}
                 </button>
               </div>
             </form>

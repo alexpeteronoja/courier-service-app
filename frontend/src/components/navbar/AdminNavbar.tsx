@@ -6,8 +6,8 @@ import { shortenText } from "../../utils/shortenText";
 function AdminNavbar({ toggleSideBar }: { toggleSideBar: () => void }) {
   return (
     <>
-      <nav className="z-40 fixed top-0 left-0 lg:left-71 right-0 bg-[#F5F7FA] ">
-        <div className="h-18 mx-5 sm:mx-8 flex items-center justify-between text-[#1E1E1E]">
+      <nav className="z-40 fixed top-0 left-0 lg:left-71 right-0 bg-primary ">
+        <div className="h-18 mx-5 sm:mx-8 flex items-center justify-between text-white">
           <button
             type="button"
             onClick={toggleSideBar}
@@ -22,7 +22,7 @@ function AdminNavbar({ toggleSideBar }: { toggleSideBar: () => void }) {
             <div>
               <input
                 type="text"
-                className="rounded-full py-4 ps-12 pe-4 h-12 w-100 border border-[#20186D] outline-0"
+                className="rounded-full py-4 ps-12 pe-4 h-12 w-100 border border-white outline-0"
                 placeholder="Search"
               />
             </div>
