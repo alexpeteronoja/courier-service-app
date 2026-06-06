@@ -14,12 +14,12 @@ const signToken = (id) => {
 export const signUp = catchAsync(async (req, res, next) => {
   const newUser = await User.create(req.body);
 
-  const token = signToken(newUser._id);
+  const accessToken = signToken(newUser._id);
 
   successResponse(
     res,
     201,
-    { data: { token, user: newUser } },
+    { data: { accessToken, user: newUser } },
     'Login Successfull',
   );
 });
@@ -43,44 +43,55 @@ export const login = catchAsync(async (req, res, next) => {
 
   // return token if everything is ok
 
-  const token = signToken(user._id);
+  const accessToken = signToken(user._id);
 
-  successResponse(res, 200, { data: { token, user } }, 'Login Successfull');
+  successResponse(
+    res,
+    200,
+    { data: { accessToken, user } },
+    'Login Successfull',
+  );
 });
 
 // Protect Routes
 
 export const protect = catchAsync(async (req, res, next) => {
-  let token;
+  let accessToken;
 
-  // Check if token is in header
+  // Check if accessToken is in header
 
   if (
     req.headers.authorization &&
     req.headers.authorization.startsWith('Bearer')
   ) {
-    token = req.headers.authorization.split(' ')[1];
+    accessToken = req.headers.authorization.split(' ')[1];
   }
 
-  if (!token) {
+  if (!accessToken) {
     return next(
       new AppError('You are not logged in! Please login to get access.', 401),
     );
   }
 
-  // Verifying token
+  // Verifying accessToken
 
-  const decoded = await promisify(jwt.verify)(token, process.env.JWT_SECRET);
+  const decoded = await promisify(jwt.verify)(
+    accessToken,
+    process.env.JWT_SECRET,
+  );
 
   const user = await User.findById(decoded.id);
 
   if (!user) {
     return next(
-      new AppError('The user belonging to this token does not exist', 401),
+      new AppError(
+        'The user belonging to this accessToken does not exist',
+        401,
+      ),
     );
   }
 
-  // check if user changed password after token was issued.
+  // check if user changed password after accessToken was issued.
 
   if (user.changedPasswordAfter(decoded.iat)) {
     return next(
@@ -127,7 +138,7 @@ export const updatePassword = catchAsync(async (req, res, next) => {
 
   await user.save();
 
-  const token = signToken(user._id);
+  const accessToken = signToken(user._id);
 
-  successResponse(res, 200, { data: { token } }, 'Password Changed');
+  successResponse(res, 200, { data: { accessToken } }, 'Password Changed');
 });

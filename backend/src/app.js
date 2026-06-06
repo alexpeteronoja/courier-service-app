@@ -1,4 +1,5 @@
 import express from 'express';
+import cors from 'cors';
 import { userRouter } from './routes/userRoutes.js';
 import { errorController } from './controllers/errorController.js';
 /* eslint-disable import/no-extraneous-dependencies */
@@ -9,9 +10,9 @@ import { authRouter } from './routes/authRoutes.js';
 
 const app = express();
 
-app.use(express.json());
+app.use(cors({ origin: 'http://localhost:5173' }));
 
-console.log(process.env.NODE_ENV);
+app.use(express.json());
 
 if (process.env.NODE_ENV === 'development') {
   app.use(morgan('dev'));
