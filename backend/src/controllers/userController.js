@@ -52,3 +52,35 @@ export const updateMe = catchAsync(async (req, res, next) => {
 
   successResponse(res, 200, { data: { user } }, 'Updated Successful');
 });
+
+// delete Shipment
+
+export const toggleUserStatus = catchAsync(async (req, res, next) => {
+  const { isActive } = req.body;
+
+  if (typeof isActive !== 'boolean') {
+    return next(new AppError('isActive must be true or false', 400));
+  }
+
+  const user = await User.findByIdAndUpdate(
+    req.params.userId,
+    { isActive },
+    { new: true },
+  );
+
+  if (!user) return next(new AppError('User not found', 404));
+
+  successResponse(res, 200, { data: {} }, 'User Deactivate successfully');
+});
+
+// Delete User
+
+export const deleteUser = catchAsync(async (req, res, next) => {
+  const { userId } = req.params;
+
+  const user = await User.findByIdAndDelete(userId);
+
+  if (!user) return next(new AppError('User not found', 404));
+
+  successResponse(res, 200, { data: {} }, 'User Deleted');
+});

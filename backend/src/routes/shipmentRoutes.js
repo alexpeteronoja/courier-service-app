@@ -8,19 +8,21 @@ import {
   getShipment,
   updateShipment,
 } from '../controllers/shipmentController.js';
-import { authorize, protect } from '../controllers/authController.js';
+import { protect } from '../controllers/authController.js';
 
 const router = Router();
 
-router.route('/').get(getAllShipments).post(protect, createShipment);
+router.route('/').get(protect, getAllShipments).post(protect, createShipment);
+
+// authorize('admin')
 
 router
   .route('/:shipmentId')
   .get(protect, getShipment)
   .patch(protect, updateShipment)
-  .delete(protect, authorize('admin'), deleteShipment);
+  .delete(protect, deleteShipment);
 
-router.patch('/:trackingCode/events', protect, addTrackingEvent);
+router.patch('/:shipmentId/events', protect, addTrackingEvent);
 router.delete('/:shipmentId/events/:eventId', protect, deleteTrackingEvent);
 
 export { router as shipmentRouter };

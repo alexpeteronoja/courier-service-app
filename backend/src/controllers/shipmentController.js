@@ -1,3 +1,4 @@
+/* eslint-disable prefer-destructuring */
 import { Shipment } from '../model/shipmentModel.js';
 import APIFeatures from '../utils/apiFeatures.js';
 import { AppError } from '../utils/appError.js';
@@ -41,8 +42,14 @@ export const getAllShipments = catchAsync(async (req, res, next) => {
     .pagination();
 
   const shipment = await shipmentFeatures.queryModel;
+  const length = shipment.length;
 
-  successResponse(res, 200, { data: { shipment } }, 'Shipments retrieved');
+  successResponse(
+    res,
+    200,
+    { data: { length, shipment } },
+    'Shipments retrieved',
+  );
 });
 
 // get a shipment
@@ -94,20 +101,15 @@ export const deleteShipment = catchAsync(async (req, res, next) => {
 // add tracking event
 
 export const addTrackingEvent = catchAsync(async (req, res, next) => {
-  const { trackingCode } = req.params;
+  const { shipmentId } = req.params;
   const { status, description, notes } = req.body;
 
-  const shipment = await Shipment.findOne({
-    trackingCode: trackingCode.toUpperCase(),
-  });
+  // const shipment = await Shipment.findOne({
+  //   trackingCode: trackingCode.toUpperCase(),
+  // });
 
-  if (!shipment)
-    return next(
-      new AppError(
-        `No shipment found with tracking code: ${trackingCode}`,
-        404,
-      ),
-    );
+  const shipment = await Shipment.findById(shipmentId);
+  if (!shipment) return next(new AppError(`No shipment found`, 404));
 
   // new event
   const newEvent = {

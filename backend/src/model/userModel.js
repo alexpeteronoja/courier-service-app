@@ -19,6 +19,11 @@ const userSchema = new mongoose.Schema(
       match: [/^\S+@\S+\.\S+$/, 'Please provide a valid email'],
     },
 
+    phoneNumber: {
+      type: String,
+      minlength: [11, 'Enter a Valid Phone Number'],
+    },
+
     password: {
       type: String,
       required: [true, 'Password is required'],
@@ -39,7 +44,7 @@ const userSchema = new mongoose.Schema(
 
     role: {
       type: String,
-      enum: ['admin', 'operator', 'driver', 'warehouse'],
+      enum: ['admin', 'operator', 'coordinator'],
       default: 'operator',
     },
 
