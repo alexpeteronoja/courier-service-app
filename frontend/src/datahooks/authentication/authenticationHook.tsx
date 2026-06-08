@@ -3,23 +3,33 @@ import { useMutation } from "@tanstack/react-query";
 import ApiInstance from "../../api/ApiInstance";
 // import { useNavigate } from "react-router-dom";
 import Cookies from "js-cookie";
-import type { LoginPayload, LoginResponse } from "./authenticationtype";
+import type {
+  LoginPayload,
+  LoginResponse,
+  AdminStaffSignupPayload,
+} from "./authenticationtype";
+import type { createShipmentErrorResponse } from "../shipment/shipmenttype";
 
-// export const useArtistSignup = () => {
-//   const { mutate, isPending, isError, isSuccess } = useMutation({
-//     mutationFn: (data) => ApiInstance.post("/auth/artist-signup", data),
-//     onError: (err) => {
-//       console.error("error", err?.response?.data);
-//     },
-//   });
+export const useAdminStaffSignUp = () => {
+  const { mutate, mutateAsync, isPending, isError, isSuccess } = useMutation<
+    unknown,
+    AxiosError<createShipmentErrorResponse>,
+    AdminStaffSignupPayload
+  >({
+    mutationFn: (data) => ApiInstance.post("/auth/signup", data),
+    onError: (err) => {
+      console.error("error", err?.response?.data);
+    },
+  });
 
-//   return {
-//     signupMutate: mutate,
-//     signupPending: isPending,
-//     signupError: isError,
-//     signupSuccess: isSuccess,
-//   };
-// };
+  return {
+    adminStaffSignupMutate: mutate,
+    adminStaffSignupMutateAsync: mutateAsync,
+    adminStaffSignupPending: isPending,
+    adminStaffSignupError: isError,
+    adminStaffSignupSuccess: isSuccess,
+  };
+};
 
 // Login
 

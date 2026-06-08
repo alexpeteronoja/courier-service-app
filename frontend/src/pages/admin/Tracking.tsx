@@ -1,11 +1,19 @@
+import TrackingPage from "../../components/tracking/TrackingPage";
+import AddTracking from "../../components/tracking/AddTracking";
+import { useTrackingStores } from "../../zustandStores/openModalStore";
+import { useEffect } from "react";
+
 function Tracking() {
-  return (
-    <>
-      <div className="mt-18 pb-10 ml-0 lg:ml-71 px-4 md:px-8.5 bg-background text-textcol min-h-dvh">
-        kjlh
-      </div>
-    </>
-  );
+  const { isAddTrackingOpen, closeAddTracking } = useTrackingStores();
+
+  useEffect(() => {
+    return () => {
+      closeAddTracking();
+    };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
+  return <>{isAddTrackingOpen ? <AddTracking /> : <TrackingPage />}</>;
 }
 
 export default Tracking;

@@ -1,20 +1,20 @@
 import { Loader2, X } from "lucide-react";
 import { useForm } from "react-hook-form";
-import { useCreateShipment } from "../../datahooks/shipment/shipmentHook";
+import { useUpdateShipment } from "../../datahooks/shipment/shipmentHook";
 import { notifyError, notifySuccess } from "../../utils/toast";
 import axios from "axios";
-import { useOpenAddShipmentStores } from "../../zustandStores/openModalStore";
+import { useEditShipmentStore } from "../../zustandStores/openModalStore";
+import { useEffect } from "react";
 import type { ShipmentFormDataTypes } from "./shipmentTypes";
 
-function CreateShipment() {
-  const { createShipmentMutateAsync, createShipmentPending } =
-    useCreateShipment();
-  const { closeAddShipment, isAddShipmentOpen } = useOpenAddShipmentStores();
-
+function EditShipment() {
+  const { updateShipmentMutateAsync, updateShipmentPending } =
+    useUpdateShipment();
+  const { closeEditShipmentStore, editShipmentStore } = useEditShipmentStore();
   const {
     register,
     handleSubmit,
-    formState: { isSubmitting },
+    formState: { isSubmitting, dirtyFields },
     reset,
   } = useForm<ShipmentFormDataTypes>({
     defaultValues: {
@@ -22,30 +22,45 @@ function CreateShipment() {
     },
   });
 
+  useEffect(() => {
+    if (editShipmentStore) {
+      reset({
+        senderName: editShipmentStore.senderName,
+        senderPhoneNo: editShipmentStore.senderPhoneNo,
+        senderAddress: editShipmentStore.senderAddress,
+
+        recipientName: editShipmentStore.recipientName,
+        recipientPhoneNo: editShipmentStore.recipientPhoneNo,
+        recipientEmail: editShipmentStore.recipientEmail,
+        recipientAddress: editShipmentStore.recipientAddress,
+
+        packageDescription: editShipmentStore.packageDescription,
+        weight: editShipmentStore.weight,
+        category: editShipmentStore.category,
+        estimatedDelivery: editShipmentStore.estimatedDelivery,
+      });
+    }
+  }, [reset, editShipmentStore]);
+
   const onSubmit = async (data: ShipmentFormDataTypes) => {
     try {
-      const res = await createShipmentMutateAsync({
-        senderName: data.senderName,
-        senderPhoneNo: data.senderPhoneNo,
-        senderAddress: data.senderAddress,
+      const updatedData = (
+        Object.keys(dirtyFields) as (keyof ShipmentFormDataTypes)[]
+      ).reduce<Partial<ShipmentFormDataTypes>>((acc, key) => {
+        acc[key] = data[key] as never;
+        return acc;
+      }, {});
 
-        recipientName: data.recipientName,
-        recipientPhoneNo: data.recipientPhoneNo,
-        recipientEmail: data.recipientEmail,
-        recipientAddress: data.recipientAddress,
-
-        packageDescription: data.packageDescription,
-        weight: data.weight,
-        category: data.category,
-        estimatedDelivery: data.estimatedDelivery,
+      await updateShipmentMutateAsync({
+        shipmentId: editShipmentStore?._id,
+        data: updatedData,
       });
-
-      console.log(res);
 
       notifySuccess("Shipment Added Succesfully");
 
       reset();
-      closeAddShipment();
+
+      closeEditShipmentStore();
     } catch (err) {
       if (axios.isAxiosError(err)) {
         notifyError(err.response?.data?.message);
@@ -58,43 +73,22 @@ function CreateShipment() {
   return (
     <>
       {/* Modal */}
-      {isAddShipmentOpen && (
+      {editShipmentStore && (
         <div className="pt-24 pb-10 ml-0 lg:ml-71 px-4 md:px-8.5 bg-background text-textcol min-h-dvh">
           <div className="bg-white w-full p-6 relative rounded-md">
             {/* Close Button */}
             <button
-              onClick={closeAddShipment}
+              onClick={closeEditShipmentStore}
               className="absolute right-4 top-4 cursor-pointer text-gray-500 hover:text-black"
             >
               <X size={22} />
             </button>
 
-            <h2 className="text-2xl font-semibold mb-6">Add New Shipment</h2>
+            <h2 className="text-2xl font-semibold mb-6">Edit Shipment</h2>
 
             {/* Form Details */}
 
             <form onSubmit={handleSubmit(onSubmit)} className="space-y-8">
-              {/* ================= STATUS ================= */}
-              {/* <div>
-                <h3 className="text-lg font-semibold mb-3">Shipment Status</h3>
-
-                <select
-                  {...register("status", { required: true })}
-                  className="input"
-                >
-                  <option value="pending">Pending</option>
-                  <option value="picked_up">Picked Up</option>
-                  <option value="in_transit">In Transit</option>
-                  <option value="at_hub">At Hub</option>
-                  <option value="out_for_delivery">Out For Delivery</option>
-                  <option value="delivered">Delivered</option>
-                  <option value="failed_delivery">Failed Delivery</option>
-                  <option value="returned">Returned</option>
-                  <option value="customs_hold">Customs Hold</option>
-                  <option value="exception">Exception</option>
-                </select>
-              </div> */}
-
               {/* ================= SENDER ================= */}
               <div>
                 <h3 className="text-lg font-semibold mb-3">
@@ -198,7 +192,7 @@ function CreateShipment() {
               <div className="flex justify-end gap-3 pt-4">
                 <button
                   type="button"
-                  onClick={closeAddShipment}
+                  onClick={closeEditShipmentStore}
                   className="border px-5 py-2 rounded-md cursor-pointer"
                 >
                   Cancel
@@ -209,10 +203,10 @@ function CreateShipment() {
                   disabled={isSubmitting}
                   className="bg-primary text-white px-5 py-2 rounded-md flex justify-center items-center cursor-pointer"
                 >
-                  {createShipmentPending ? (
+                  {updateShipmentPending ? (
                     <Loader2 className="animate-spin duration-300" />
                   ) : (
-                    "Create Shipment"
+                    "Update Shipment"
                   )}
                 </button>
               </div>
@@ -224,4 +218,4 @@ function CreateShipment() {
   );
 }
 
-export default CreateShipment;
+export default EditShipment;

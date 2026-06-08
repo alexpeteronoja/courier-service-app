@@ -15,3 +15,12 @@ export type LoginResponse = {
     };
   };
 };
+
+export type AdminStaffSignupPayload = {
+  name: string;
+  email: string;
+  phoneNumber: string;
+  role: string;
+  password: string;
+  passwordConfirm: string;
+};

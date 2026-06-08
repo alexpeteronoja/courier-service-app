@@ -7,7 +7,7 @@ import {
   Truck,
   Calendar,
 } from "lucide-react";
-import Timeline, { Info, PersonCard } from "./shipmentHelpers";
+import Timeline, { Info, PersonCard } from "../shipment/shipmentHelpers";
 
 const mockShipments = {
   SS123456789: {
@@ -79,7 +79,7 @@ const mockShipments = {
   },
 };
 
-export default function ShipmentDetails() {
+export default function ShipmentDetailsPage() {
   const id = "SS123456789";
   const navigate = useNavigate();
 

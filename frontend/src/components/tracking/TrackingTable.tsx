@@ -1,34 +1,12 @@
-import { Eye, FilePenLine, Loader2, Search, Trash2 } from "lucide-react";
-import { useDeleteShipment } from "../../datahooks/shipment/shipmentHook";
-import { notifyError, notifySuccess } from "../../utils/toast";
-import axios from "axios";
-import { useState } from "react";
+import { CirclePlus, Eye, Search } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 import { shortenText } from "../../utils/shortenText";
-import { useEditShipmentStore } from "../../zustandStores/openModalStore";
-import type { DashboardTableProps } from "./shipmentTypes";
+import { useTrackingStores } from "../../zustandStores/openModalStore";
+import type { TrackingTableProps } from "./TrackingTypes";
 
-function ShipmentTable({ filteredShipments }: DashboardTableProps) {
-  const [deleteShipmentId, setDeleteShipmentId] = useState<string | null>(null);
-  const { deleteShipmentMutateAsync, deleteShipmentPending } =
-    useDeleteShipment();
-  const { setEditShipmentStore } = useEditShipmentStore();
+function TrackingTable({ filteredShipments }: TrackingTableProps) {
   const navigate = useNavigate();
-
-  const handleDeleteShipment = async (shipmentId: string) => {
-    try {
-      setDeleteShipmentId(shipmentId);
-      await deleteShipmentMutateAsync(shipmentId);
-      notifySuccess("Shipment Deleted");
-    } catch (err) {
-      if (axios.isAxiosError(err)) {
-        console.log("my error", err.response);
-        notifyError(err.response?.data?.message);
-      } else {
-        console.log(err);
-      }
-    }
-  };
+  const { openAddTracking, setTrackingDataStore } = useTrackingStores();
 
   return (
     <>
@@ -63,7 +41,7 @@ function ShipmentTable({ filteredShipments }: DashboardTableProps) {
                     className={`border-b border-border last:border-0 ${index % 2 === 0 ? "bg-white" : ""}`}
                   >
                     <td className="py-4">
-                      <span className="text-base font-mono">
+                      <span className="font-mono text-base">
                         {shipment.trackingCode}
                       </span>
                     </td>
@@ -84,33 +62,23 @@ function ShipmentTable({ filteredShipments }: DashboardTableProps) {
                       >
                         <button
                           className="p-1.5 rounded-lg text-gray-400 hover:text-primary hover:bg-[#f4faf0] transition-colors cursor-pointer hover:scale-110 duration-300"
+                          onClick={() => {
+                            openAddTracking();
+                            setTrackingDataStore(shipment);
+                          }}
+                          title="Add Tracking Event"
+                        >
+                          <CirclePlus />
+                        </button>
+
+                        <button
+                          className="p-1.5 rounded-lg text-gray-400 hover:text-primary hover:bg-[#f4faf0] transition-colors cursor-pointer hover:scale-110 duration-300"
                           onClick={() =>
                             navigate(`/shipment-details/${shipment._id}`)
                           }
                           title="View Product"
                         >
                           <Eye />
-                        </button>
-
-                        <button
-                          className="p-1.5 rounded-lg text-gray-400 hover:text-primary hover:bg-[#f4faf0] transition-colors cursor-pointer hover:scale-110 duration-300"
-                          onClick={() => setEditShipmentStore(shipment)}
-                          title="Edit product"
-                        >
-                          <FilePenLine />
-                        </button>
-
-                        <button
-                          onClick={() => handleDeleteShipment(shipment._id)}
-                          className="p-1.5 rounded-lg text-gray-400 hover:text-primary hover:bg-[#f4faf0] transition-colors cursor-pointer hover:scale-110 duration-300"
-                          title="Delete Product"
-                        >
-                          {deleteShipmentPending &&
-                          deleteShipmentId === shipment._id ? (
-                            <Loader2 className="animate-spin duration-300 mx-auto" />
-                          ) : (
-                            <Trash2 />
-                          )}
                         </button>
                       </div>
                     </td>
@@ -135,4 +103,4 @@ function ShipmentTable({ filteredShipments }: DashboardTableProps) {
   );
 }
 
-export default ShipmentTable;
+export default TrackingTable;

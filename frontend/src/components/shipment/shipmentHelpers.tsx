@@ -27,23 +27,28 @@ export const Info = ({
 interface PersonCardProps {
   title: string;
   icon: LucideIcon;
-  person: {
-    name: string;
-    address: string;
-    city: string;
-    state: string;
-    zip: string;
-    country: string;
-    phone?: string;
-    email?: string;
-  };
+  name: string;
+  address: string;
+  city: string;
+  state: string;
+  zip: string;
+  country: string;
+  phone?: string;
+  email?: string;
   showContact?: boolean;
 }
 
 export const PersonCard = ({
   title,
   icon: Icon,
-  person,
+  name,
+  address,
+  city,
+  state,
+  country,
+  phone,
+  email,
+  zip,
   showContact,
 }: PersonCardProps) => {
   return (
@@ -54,17 +59,17 @@ export const PersonCard = ({
       </div>
 
       <div className="space-y-1 text-sm">
-        <p className="font-medium">{person.name}</p>
-        <p className="text-gray-500">{person.address}</p>
+        <p className="font-medium">{name}</p>
+        <p className="text-gray-500">{address}</p>
         <p className="text-gray-500">
-          {person.city}, {person.state} {person.zip}
+          {city}, {state} {zip}
         </p>
-        <p className="text-gray-500">{person.country}</p>
+        <p className="text-gray-500">{country}</p>
 
         {showContact && (
           <div className="pt-3 mt-3 border-t text-gray-500">
-            <p>{person.phone}</p>
-            <p>{person.email}</p>
+            <p>{phone}</p>
+            <p>{email}</p>
           </div>
         )}
       </div>
@@ -84,7 +89,7 @@ export type shipmentStatus =
   | "exception";
 
 export interface TimelineEvent {
-  id?: string;
+  _id?: string;
   status: shipmentStatus;
   description?: string;
   location: string;
@@ -111,15 +116,15 @@ const statusColors = {
   exception: "text-red-600 bg-red-100",
 };
 
-export default function Timeline({ events }: TimelineProps) {
+export function Timeline({ events }: TimelineProps) {
   return (
     <div className="space-y-6">
-      {events.map((event, index) => {
+      {events?.map((event, index) => {
         const Icon = statusIcons[event.status];
         const isLast = index === events.length - 1;
 
         return (
-          <div key={event.id} className="relative flex gap-4">
+          <div key={event._id} className="relative flex gap-4">
             <div className="flex flex-col items-center">
               <div
                 className={`flex items-center justify-center w-10 h-10 rounded-full ${statusColors[event.status]}`}
@@ -136,7 +141,7 @@ export default function Timeline({ events }: TimelineProps) {
               <p className="mt-1">{event.description}</p>
               <p className="mt-1 text-sm text-muted-foreground flex items-center gap-1">
                 <MapPin className="w-4 h-4" />
-                {event.location}
+                Abuja
               </p>
             </div>
           </div>

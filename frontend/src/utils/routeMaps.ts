@@ -1,21 +1,10 @@
-import { LayoutDashboard, Truck } from "lucide-react";
+import { LayoutDashboard, Locate, Truck, Users } from "lucide-react";
 
 export const ArtistSideBarContent = [
   { name: "Dashboard", path: "/dashboard", icon: LayoutDashboard },
   { name: "Shipment", path: "/shipment", icon: Truck },
-  { name: "Tracking", path: "/tracking", icon: LayoutDashboard },
-  { name: "Profile", path: "/profile", icon: LayoutDashboard },
-  {
-    name: "Performers Analysis",
-    path: "/performers-analysis",
-    icon: LayoutDashboard,
-  },
-  {
-    name: "Streaming Platform Links",
-    path: "platform-links",
-    icon: LayoutDashboard,
-  },
-  { name: "Notification", path: "/notification", icon: LayoutDashboard },
+  { name: "Tracking", path: "/tracking", icon: Locate },
+  { name: "Staff", path: "/staff", icon: Users },
 ];
 
 // For Label

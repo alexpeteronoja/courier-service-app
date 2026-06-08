@@ -1,6 +1,4 @@
-import { Search } from "lucide-react";
-
-import { useNavigate } from "react-router-dom";
+import { Eye, FilePenLine, Search, Trash2 } from "lucide-react";
 
 interface Shipment {
   id: string;
@@ -15,8 +13,6 @@ interface DashboardTableProps {
 }
 
 function DashboardTable({ filteredShipments }: DashboardTableProps) {
-  const navigate = useNavigate();
-
   return (
     <>
       <div>
@@ -61,11 +57,31 @@ function DashboardTable({ filteredShipments }: DashboardTableProps) {
                       {shipment.date}
                     </td>
                     <td className="py-4">
-                      <button
-                        onClick={() => navigate(`/shipment/${shipment.id}`)}
+                      <div
+
+                      // onClick={() => navigate(`/shipment/${shipment.id}`)}
                       >
-                        View
-                      </button>
+                        <button
+                          className="p-1.5 rounded-lg text-gray-400 hover:text-primary hover:bg-[#f4faf0] transition-colors cursor-pointer hover:scale-110 duration-300"
+                          title="View Product"
+                        >
+                          <Eye />
+                        </button>
+
+                        <button
+                          className="p-1.5 rounded-lg text-gray-400 hover:text-primary hover:bg-[#f4faf0] transition-colors cursor-pointer hover:scale-110 duration-300"
+                          title="Edit product"
+                        >
+                          <FilePenLine />
+                        </button>
+
+                        <button
+                          className="p-1.5 rounded-lg text-gray-400 hover:text-primary hover:bg-[#f4faf0] transition-colors cursor-pointer hover:scale-110 duration-300"
+                          title="Edit product"
+                        >
+                          <Trash2 />
+                        </button>
+                      </div>
                     </td>
                   </tr>
                 ))

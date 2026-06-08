@@ -2,14 +2,7 @@ import { useState } from "react";
 import SidebarLinks from "./SidebarLinks";
 import { Link } from "react-router-dom";
 import AdminNavbar from "../navbar/AdminNavbar";
-import {
-  CircleQuestionMark,
-  CreditCard,
-  LogOut,
-  Package,
-  Settings,
-  X,
-} from "lucide-react";
+import { LogOut, Package, Settings, User, X } from "lucide-react";
 
 function Sidebar() {
   //   const { logoutMutate } = useLogOut();
@@ -54,28 +47,23 @@ function Sidebar() {
         {/* Second Section */}
 
         <div>
-          <Link to="/payment">
+          <Link to="/profile">
             <div className="flex gap-x-3 p-2 items-center text-white">
               <div>
-                <CreditCard />
+                <User />
               </div>
-              <div className="font-medium">Payments</div>
+              <div className="font-medium">Profile</div>
             </div>
           </Link>
 
-          <div className="flex gap-x-3 p-2 items-center text-white">
-            <div>
-              <CircleQuestionMark />
+          <Link to="/settings">
+            <div className="flex gap-x-3 p-2 items-center text-white">
+              <div>
+                <Settings />
+              </div>
+              <div className="font-medium">Settings</div>
             </div>
-            <div className="font-medium">Support</div>
-          </div>
-
-          <div className="flex gap-x-3 p-2 items-center text-white">
-            <div>
-              <Settings />
-            </div>
-            <div className="font-medium">Settings</div>
-          </div>
+          </Link>
 
           <div className="flex gap-x-3 p-2 items-center text-[#FF3B30] cursor-pointer">
             <div>
