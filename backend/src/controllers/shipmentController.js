@@ -64,6 +64,20 @@ export const getShipment = catchAsync(async (req, res, next) => {
   successResponse(res, 200, { data: { shipment } }, 'Shipments retrieved');
 });
 
+// Public Get Shipment Details by Tracking Id
+
+export const trackShipment = catchAsync(async (req, res, next) => {
+  const trackingCode = req.params.trackingId;
+
+  const shipment = await Shipment.findOne({
+    trackingCode: trackingCode.toUpperCase(),
+  });
+
+  if (!shipment) return next(new AppError('Invalid Tracking Id', 400));
+
+  successResponse(res, 200, { data: { shipment } }, 'Shipments retrieved');
+});
+
 // update shipment
 
 export const updateShipment = catchAsync(async (req, res, next) => {
