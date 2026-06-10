@@ -30,7 +30,7 @@ function CreateStaff() {
   } = useForm<StaffFormData>({
     defaultValues: {
       // status: "pending",
-      role: "coordinator",
+      role: "operator",
     },
   });
 
@@ -133,8 +133,8 @@ function CreateStaff() {
 
                 <select {...register("role")} className="input mt-3">
                   <option value="admin">Admin</option>
-                  <option value="operator">Operator</option>
                   <option value="coordinator">Coordinator</option>
+                  <option value="operator">Operator</option>
                 </select>
               </div>
 

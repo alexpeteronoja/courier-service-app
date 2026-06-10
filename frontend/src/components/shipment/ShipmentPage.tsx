@@ -3,10 +3,11 @@ import { useState } from "react";
 import ShipmentTable from "./ShipmentTable";
 import { useGetAllShipment } from "../../datahooks/shipment/shipmentHook";
 import { useOpenAddShipmentStores } from "../../zustandStores/openModalStore";
+import TableSkeleton from "../skeleton/TableSkeleton";
 
 function ShipmentPage() {
   const [searchQuery, setSearchQuery] = useState("");
-  const { getAllShipment } = useGetAllShipment();
+  const { getAllShipment, getAllShipmentLoading } = useGetAllShipment();
   const { openAddShipment } = useOpenAddShipmentStores();
 
   const filteredShipments = getAllShipment;
@@ -60,7 +61,11 @@ function ShipmentPage() {
             </div>
           </div>
 
-          <ShipmentTable filteredShipments={filteredShipments} />
+          {getAllShipmentLoading ? (
+            <TableSkeleton />
+          ) : (
+            <ShipmentTable filteredShipments={filteredShipments} />
+          )}
         </div>
       </div>
     </>

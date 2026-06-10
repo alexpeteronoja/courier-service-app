@@ -6,3 +6,10 @@ export type deactivateUserPayload = {
     isActive: boolean;
   };
 };
+
+// Update Me
+
+export type updateMePayload = {
+  name?: string;
+  phoneNumber?: string;
+};

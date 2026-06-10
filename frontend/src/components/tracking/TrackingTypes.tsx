@@ -2,7 +2,7 @@ export type AddTrackingFormData = {
   _id: string;
   status: string;
 
-  senderPhoneNo: string;
+  location: string;
 
   description: string;
   category: string;
@@ -14,6 +14,8 @@ export interface TrackingTypes {
   _id: string;
   trackingCode: string;
   recipientName: string;
+  recipientAddress: string;
+  createdAt: string;
   destination: string;
   status: string;
   date: string;

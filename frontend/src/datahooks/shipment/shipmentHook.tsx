@@ -73,6 +73,35 @@ export const useGetShipment = (shipmentId: string) => {
   };
 };
 
+// Public Tracking
+
+export const usePublicTracking = (trackingCode: string) => {
+  const { data, isLoading, isError, error } = useQuery({
+    queryKey: ["publicTracking", trackingCode],
+    queryFn: async () => {
+      try {
+        const response = await ApiInstance.get(
+          `/shipment/track/${trackingCode}`,
+        );
+        return response?.data || [];
+      } catch (err) {
+        console.error(err);
+        throw err;
+      }
+    },
+
+    enabled: !!trackingCode,
+    retry: 2,
+  });
+
+  return {
+    publicTracking: data?.data?.shipment,
+    publicTrackingLoading: isLoading,
+    publicTrackingError: isError,
+    publicTrackingErrorMessage: error,
+  };
+};
+
 // Update Shipment
 
 export const useUpdateShipment = () => {

@@ -1,194 +1,119 @@
 import { Loader2 } from "lucide-react";
+import { useEffect } from "react";
 import { useForm } from "react-hook-form";
+import { useGetMe, useUpdateMe } from "../../datahooks/user/userHook";
+import { getErrorMessage } from "../../utils/getErrorMessage";
+import { notifySuccess } from "../../utils/toast";
+import Skeleton from "react-loading-skeleton";
+import "react-loading-skeleton/dist/skeleton.css";
 
 type TrackingFormData = {
-  status: string;
-
-  senderName: string;
-  senderPhoneNo: string;
-  senderAddress?: string;
-
-  recipientName: string;
-  recipientPhoneNo: string;
-  recipientEmail?: string;
-  recipientAddress: string;
-
-  packageDescription: string;
-  weight?: number;
-  category: string;
-
-  estimatedDelivery?: string;
+  name: string;
+  email: string;
+  phoneNumber: string;
 };
 
 function Profile() {
+  const { getMe, getMeLoading } = useGetMe();
+  const { updateMeMutateAsync } = useUpdateMe();
   const {
     register,
     handleSubmit,
-    formState: { isSubmitting },
+    formState: { isSubmitting, dirtyFields },
     reset,
-  } = useForm<TrackingFormData>({
-    defaultValues: {
-      status: "pending",
-      category: "General",
-    },
-  });
+  } = useForm<TrackingFormData>();
 
   const onSubmit = async (data: TrackingFormData) => {
     try {
-      console.log("FORM DATA:", data);
+      const updatedData = (
+        Object.keys(dirtyFields) as (keyof TrackingFormData)[]
+      ).reduce<Partial<TrackingFormData>>((acc, key) => {
+        acc[key] = data[key] as never;
+        return acc;
+      }, {});
+
+      await updateMeMutateAsync(updatedData);
+
+      notifySuccess("Profile Updated");
+
+      // console.log("FORM DATA:", data);
 
       // Example API call
       // await ApiInstance.post("/shipments", data);
 
       reset();
     } catch (err) {
-      console.error(err);
+      getErrorMessage(err);
     }
   };
+
+  useEffect(() => {
+    reset({
+      name: getMe?.name,
+      email: getMe?.email,
+      phoneNumber: getMe?.phoneNumber,
+    });
+  }, [reset, getMe]);
 
   return (
     <>
       <div className="pt-24 pb-10 ml-0 lg:ml-71 px-4 md:px-8.5 bg-background text-textcol min-h-dvh">
         <div className="bg-white w-full p-6 relative rounded-md">
-          <h2 className="text-2xl font-semibold mb-6">Add New Shipment</h2>
+          <h2 className="text-2xl font-semibold mb-6">Edit Profile</h2>
 
           {/* Form Details */}
+          {getMeLoading ? (
+            <div className="space-y-8">
+              <Skeleton height={20} width={180} className="mb-4" />
 
-          <form onSubmit={handleSubmit(onSubmit)} className="space-y-8">
-            {/* ================= STATUS ================= */}
-            <div>
-              <h3 className="text-lg font-semibold mb-3">Shipment Status</h3>
-
-              <select
-                {...register("status", { required: true })}
-                className="input"
-              >
-                <option value="pending">Pending</option>
-                <option value="picked_up">Picked Up</option>
-                <option value="in_transit">In Transit</option>
-                <option value="at_hub">At Hub</option>
-                <option value="out_for_delivery">Out For Delivery</option>
-                <option value="delivered">Delivered</option>
-                <option value="failed_delivery">Failed Delivery</option>
-                <option value="returned">Returned</option>
-                <option value="customs_hold">Customs Hold</option>
-                <option value="exception">Exception</option>
-              </select>
+              <Skeleton height={40} className="mb-3" />
+              <Skeleton height={40} className="mb-3" />
+              <Skeleton height={40} />
             </div>
+          ) : (
+            <form onSubmit={handleSubmit(onSubmit)} className="space-y-8">
+              {/* ================= SENDER ================= */}
+              <div>
+                <h3 className="text-lg font-semibold mb-3">
+                  Personal Information
+                </h3>
 
-            {/* ================= SENDER ================= */}
-            <div>
-              <h3 className="text-lg font-semibold mb-3">Sender Information</h3>
+                <input
+                  {...register("name", { required: true })}
+                  placeholder="Full Name"
+                  className="input"
+                />
 
-              <input
-                {...register("senderName", { required: true })}
-                placeholder="Sender Full Name"
-                className="input"
-              />
+                <input
+                  {...register("phoneNumber")}
+                  placeholder="Phone Number"
+                  className="input mt-3"
+                />
 
-              <input
-                {...register("senderPhoneNo", { required: true })}
-                placeholder="Sender Phone Number"
-                className="input mt-3"
-              />
+                <input
+                  {...register("email", { required: true })}
+                  placeholder="Email Address"
+                  className="input mt-3"
+                  disabled
+                />
+              </div>
 
-              <input
-                {...register("senderAddress")}
-                placeholder="Sender Address"
-                className="input mt-3"
-              />
-            </div>
-
-            {/* ================= RECIPIENT ================= */}
-            <div>
-              <h3 className="text-lg font-semibold mb-3">
-                Recipient Information
-              </h3>
-
-              <input
-                {...register("recipientName", { required: true })}
-                placeholder="Recipient Full Name"
-                className="input"
-              />
-
-              <input
-                {...register("recipientPhoneNo", { required: true })}
-                placeholder="Recipient Phone Number"
-                className="input mt-3"
-              />
-
-              <input
-                {...register("recipientEmail")}
-                placeholder="Recipient Email"
-                className="input mt-3"
-              />
-
-              <input
-                {...register("recipientAddress", { required: true })}
-                placeholder="Recipient Address"
-                className="input mt-3"
-              />
-            </div>
-
-            {/* ================= PACKAGE ================= */}
-            <div>
-              <h3 className="text-lg font-semibold mb-3">
-                Package Information
-              </h3>
-
-              <textarea
-                {...register("packageDescription", { required: true })}
-                placeholder="Package description"
-                className="input"
-              />
-
-              <input
-                type="number"
-                {...register("weight", { valueAsNumber: true })}
-                placeholder="Weight (kg)"
-                className="input mt-3"
-              />
-
-              <select {...register("category")} className="input mt-3">
-                <option value="General">General</option>
-                <option value="Document">Document</option>
-                <option value="Electronics">Electronics</option>
-                <option value="Clothing">Clothing</option>
-                <option value="Food">Food</option>
-                <option value="Fragile">Fragile</option>
-                <option value="Other">Other</option>
-              </select>
-            </div>
-
-            {/* ================= DELIVERY ================= */}
-            <div>
-              <h3 className="text-lg font-semibold mb-3">Delivery Timeline</h3>
-
-              <input
-                type="date"
-                {...register("estimatedDelivery")}
-                className="input"
-              />
-            </div>
-
-            {/* ================= BUTTONS ================= */}
-            <div className="flex justify-end gap-3 pt-4">
-              <button
-                type="button"
-                className="border px-5 py-2 rounded-md cursor-pointer"
-              >
-                Cancel
-              </button>
-
-              <button
-                type="submit"
-                disabled={isSubmitting}
-                className="bg-primary text-white px-5 py-2 rounded-md flex justify-center items-center cursor-pointer"
-              >
-                {isSubmitting ? <Loader2 /> : "Create Shipment"}
-              </button>
-            </div>
-          </form>
+              {/* ================= BUTTONS ================= */}
+              <div className="pt-4">
+                <button
+                  type="submit"
+                  disabled={isSubmitting}
+                  className="bg-primary text-white px-5 py-2 rounded-md flex justify-center items-center cursor-pointer"
+                >
+                  {isSubmitting ? (
+                    <Loader2 className="animate-spin duration-300" />
+                  ) : (
+                    "Update Profile"
+                  )}
+                </button>
+              </div>
+            </form>
+          )}
         </div>
       </div>
     </>

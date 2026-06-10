@@ -3,6 +3,7 @@ import { useNavigate } from "react-router-dom";
 import { shortenText } from "../../utils/shortenText";
 import { useTrackingStores } from "../../zustandStores/openModalStore";
 import type { TrackingTableProps } from "./TrackingTypes";
+import { formatDate } from "../../utils/dateformat";
 
 function TrackingTable({ filteredShipments }: TrackingTableProps) {
   const navigate = useNavigate();
@@ -49,11 +50,11 @@ function TrackingTable({ filteredShipments }: TrackingTableProps) {
                       {shortenText(shipment.recipientName, 16)}
                     </td>
                     <td className="py-4 text-base text-muted-foreground">
-                      Abuja
+                      {shortenText(shipment.recipientAddress, 10)}
                     </td>
                     <td className="py-4">{shipment.status}</td>
                     <td className="py-4 text-base text-muted-foreground">
-                      10/60/2020
+                      {formatDate(shipment.createdAt)}
                     </td>
                     <td className="py-4">
                       <div

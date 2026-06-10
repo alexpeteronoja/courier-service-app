@@ -25,7 +25,7 @@ function Login() {
     } else {
       navigate("/admin");
     }
-  });
+  }, [navigate, isAuthenticated]);
 
   // Handle Signin
 
@@ -43,11 +43,10 @@ function Login() {
     }
 
     try {
-      const res = await signinMutateAsync({
+      await signinMutateAsync({
         email: email,
         password: password,
       });
-      console.log(res);
     } catch (err) {
       if (axios.isAxiosError(err)) {
         console.log("my error", err.response);

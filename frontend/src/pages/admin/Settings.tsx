@@ -1,7 +1,9 @@
-import { Eye, EyeOff } from "lucide-react";
+import { Eye, EyeOff, Loader2 } from "lucide-react";
 import { useState } from "react";
-import { useForm } from "react-hook-form";
-import { notifyError } from "../../utils/toast";
+import { useForm, useWatch } from "react-hook-form";
+import { notifyError, notifySuccess } from "../../utils/toast";
+import { useUpdatePassword } from "../../datahooks/authentication/authenticationHook";
+import { getErrorMessage } from "../../utils/getErrorMessage";
 
 type FormValues = {
   oldPassword: string;
@@ -11,13 +13,21 @@ type FormValues = {
 
 function Settings() {
   const [showPassword, setShowPassword] = useState<string | null>(null);
+  const { updatePasswordMutateAsync, updatePasswordPending } =
+    useUpdatePassword();
 
   const {
     register,
     handleSubmit,
-    watch,
+    control,
     formState: { errors },
+    reset,
   } = useForm<FormValues>();
+
+  const passwordMatch = useWatch({
+    control,
+    name: "newPassword",
+  });
 
   const toggleVisibility = (value: string) => {
     setShowPassword((prev) => (prev === value ? null : value));
@@ -39,15 +49,26 @@ function Settings() {
     );
   };
 
-  const onSubmit = (data: FormValues) => {
-    if (data.newPassword !== data.confirmNewPassword) {
-      notifyError("Passwords do not match");
-      return;
+  const onSubmit = async (data: FormValues) => {
+    try {
+      if (data.newPassword !== data.confirmNewPassword) {
+        notifyError("Passwords do not match");
+        return;
+      }
+
+      await updatePasswordMutateAsync({
+        currentPassword: data.oldPassword,
+        newPassword: data.newPassword,
+        confirmNewPassword: data.confirmNewPassword,
+      });
+
+      notifySuccess("Password Changed Succesfully");
+      reset();
+      // API CALL HERE
+    } catch (err) {
+      getErrorMessage(err);
+      reset();
     }
-
-    console.log(data);
-
-    // API CALL HERE
   };
 
   return (
@@ -130,8 +151,7 @@ function Settings() {
                   {...register("confirmNewPassword", {
                     required: "Please confirm your new password",
                     validate: (value) =>
-                      value === watch("newPassword") ||
-                      "Passwords do not match",
+                      value === passwordMatch || "Password does not match",
                   })}
                   className="w-full mt-2 px-3 py-2.5 rounded-[10px] outline-0 text-sm text-[#1E1E1E] bg-[#F5F7FA] border focus:border-amber-600"
                 />
@@ -151,7 +171,11 @@ function Settings() {
                 type="submit"
                 className="w-full flex justify-center items-center cursor-pointer rounded-[10px] bg-accent py-3"
               >
-                Change Password
+                {updatePasswordPending ? (
+                  <Loader2 className="animate-spin duration-300" />
+                ) : (
+                  " Change Password"
+                )}
               </button>
             </div>
           </form>

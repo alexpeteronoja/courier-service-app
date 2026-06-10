@@ -1,8 +1,9 @@
 // import { sideBarContent } from '../../utils/routeMaps';
 import { NavLink, type NavLinkRenderProps } from "react-router-dom";
 import {
-  labelSideBarContent,
-  ArtistSideBarContent,
+  AdminSideBarContent,
+  CoordinatorSideBarContent,
+  OperatorSideBarContent,
 } from "../../utils/routeMaps";
 
 import withAuth from "../../api/withAuth";
@@ -21,11 +22,13 @@ function LabelSidebarLinks({
   });
 
   const sidebarContent =
-    userRole === "independent_artist"
-      ? ArtistSideBarContent
-      : userRole === "record_label"
-        ? labelSideBarContent
-        : [];
+    userRole === "admin"
+      ? AdminSideBarContent
+      : userRole === "coordinator"
+        ? CoordinatorSideBarContent
+        : userRole === "operator"
+          ? OperatorSideBarContent
+          : [];
 
   return (
     <>

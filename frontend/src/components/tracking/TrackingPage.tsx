@@ -1,11 +1,12 @@
 import { useState } from "react";
 import TrackingTable from "./TrackingTable";
 import { useGetAllShipment } from "../../datahooks/shipment/shipmentHook";
+import TableSkeleton from "../skeleton/TableSkeleton";
 
 function TrackingPage() {
   const [searchQuery, setSearchQuery] = useState("");
 
-  const { getAllShipment } = useGetAllShipment();
+  const { getAllShipment, getAllShipmentLoading } = useGetAllShipment();
 
   const filteredShipments = getAllShipment;
 
@@ -51,7 +52,11 @@ function TrackingPage() {
             </div>
           </div>
 
-          <TrackingTable filteredShipments={filteredShipments} />
+          {getAllShipmentLoading ? (
+            <TableSkeleton />
+          ) : (
+            <TrackingTable filteredShipments={filteredShipments} />
+          )}
         </div>
       </div>
     </>

@@ -1,41 +1,25 @@
 import { LayoutDashboard, Locate, Truck, Users } from "lucide-react";
 
-export const ArtistSideBarContent = [
+// Admin Sidebar
+
+export const AdminSideBarContent = [
   { name: "Dashboard", path: "/dashboard", icon: LayoutDashboard },
   { name: "Shipment", path: "/shipment", icon: Truck },
   { name: "Tracking", path: "/tracking", icon: Locate },
   { name: "Staff", path: "/staff", icon: Users },
 ];
 
-// For Label
+// Coordinator Sidebar
 
-export const labelSideBarContent = [
-  {
-    name: "Dashboard",
-    path: "/dashboard",
-    icon: LayoutDashboard,
-  },
-  {
-    name: "Hire AI Influencer",
-    path: "/label/hire-influencer",
-    icon: LayoutDashboard,
-  },
-  {
-    name: "Generate Content",
-    path: "/label/generate-content",
-    icon: LayoutDashboard,
-  },
+export const CoordinatorSideBarContent = [
+  { name: "Dashboard", path: "/dashboard", icon: LayoutDashboard },
+  { name: "Shipment", path: "/shipment", icon: Truck },
+  { name: "Tracking", path: "/tracking", icon: Locate },
+];
 
-  {
-    name: "Buy Additional Features",
-    path: "/label/buy-additional-features",
-    icon: LayoutDashboard,
-  },
-  {
-    name: "Artist",
-    path: "/label/artist",
-    icon: LayoutDashboard,
-  },
+// Operator Sidebar
 
-  { name: "Notification", path: "/label/notification", icon: LayoutDashboard },
+export const OperatorSideBarContent = [
+  { name: "Dashboard", path: "/dashboard", icon: LayoutDashboard },
+  { name: "Tracking", path: "/tracking", icon: Locate },
 ];

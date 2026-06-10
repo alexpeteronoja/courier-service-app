@@ -35,6 +35,7 @@ function CreateShipment() {
         recipientAddress: data.recipientAddress,
 
         packageDescription: data.packageDescription,
+        packageLocation: data.packageLocation,
         weight: data.weight,
         category: data.category,
         estimatedDelivery: data.estimatedDelivery,
@@ -161,6 +162,12 @@ function CreateShipment() {
                   {...register("packageDescription", { required: true })}
                   placeholder="Package description"
                   className="input"
+                />
+
+                <input
+                  {...register("packageLocation", { required: true })}
+                  placeholder="Package Location"
+                  className="input mt-3"
                 />
 
                 <input

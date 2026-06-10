@@ -1,7 +1,7 @@
 import axios from "axios";
 import Cookies from "js-cookie";
 
-const api = "http://localhost:3000/api/v1"; // "https://courier-service-app-he8z.onrender.com/api/v1";
+const api = "http://localhost:3000/api/v1"; // "https://courier-service-app-he8z.onrender.com/api/v1"; ;
 
 const ApiInstance = axios.create({
   baseURL: api,
@@ -48,7 +48,7 @@ const handleAuthFailure = () => {
   Cookies.remove("userEmail");
   Cookies.remove("userRole");
 
-  window.location.href = "/";
+  window.location.href = "/admin";
 };
 
 export default ApiInstance;

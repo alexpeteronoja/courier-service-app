@@ -31,6 +31,7 @@ function AddTracking() {
         data: {
           status: data.status,
           description: data.description,
+          location: data.location,
         },
       });
 
@@ -101,7 +102,7 @@ function AddTracking() {
                 />
 
                 <input
-                  {...register("senderPhoneNo", { required: true })}
+                  {...register("location", { required: true })}
                   placeholder="Location"
                   className="input mt-3"
                 />

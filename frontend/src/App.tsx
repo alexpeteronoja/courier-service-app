@@ -13,6 +13,9 @@ import ShipmentDetails from "./pages/admin/ShipmentDetails";
 import Staff from "./pages/admin/Staff";
 import Profile from "./pages/admin/Profile";
 import Settings from "./pages/admin/Settings";
+import Testing from "./pages/Testing";
+import TrackParcel from "./pages/landingPage/TrackParcel";
+import ProtectRoutes from "./pages/ProtectRoutes";
 
 function App() {
   return (
@@ -22,20 +25,74 @@ function App() {
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/admin" element={<Login />} />
+          <Route path="/testing" element={<Testing />} />
+          <Route path="/track-parcel/" element={<TrackParcel />} />
+          <Route path="/track-parcel/:trackingId" element={<TrackParcel />} />
 
           {/* Admin Routes */}
 
           <Route path="/" element={<SidebarParent />}>
             <Route path="/dashboard" element={<Dashboard />} />
-            <Route path="/shipment" element={<Shipment />} />
+            <Route
+              path="/shipment"
+              element={
+                <ProtectRoutes requiredRole={["admin", "coordinator"]}>
+                  <Shipment />
+                </ProtectRoutes>
+              }
+            />
             <Route
               path="/shipment-details/:shipmentId"
-              element={<ShipmentDetails />}
+              element={
+                <ProtectRoutes
+                  requiredRole={["admin", "coordinator", "operator"]}
+                >
+                  <ShipmentDetails />
+                </ProtectRoutes>
+              }
             />
-            <Route path="/tracking" element={<Tracking />} />
-            <Route path="/staff" element={<Staff />} />
-            <Route path="/profile" element={<Profile />} />
-            <Route path="/settings" element={<Settings />} />
+
+            <Route
+              path="/tracking"
+              element={
+                <ProtectRoutes
+                  requiredRole={["admin", "coordinator", "operator"]}
+                >
+                  <Tracking />{" "}
+                </ProtectRoutes>
+              }
+            />
+
+            <Route
+              path="/staff"
+              element={
+                <ProtectRoutes requiredRole={["admin"]}>
+                  <Staff />
+                </ProtectRoutes>
+              }
+            />
+
+            <Route
+              path="/profile"
+              element={
+                <ProtectRoutes
+                  requiredRole={["admin", "coordinator", "operator"]}
+                >
+                  <Profile />
+                </ProtectRoutes>
+              }
+            />
+
+            <Route
+              path="/settings"
+              element={
+                <ProtectRoutes
+                  requiredRole={["admin", "coordinator", "operator"]}
+                >
+                  <Settings />
+                </ProtectRoutes>
+              }
+            />
           </Route>
         </Routes>
       </Router>

@@ -80,6 +80,7 @@ export const PersonCard = ({
 // Timeline
 
 import { Package, MapPin, Truck, CheckCircle, AlertCircle } from "lucide-react";
+import { formatDateTime } from "../../utils/dateformat";
 
 export type shipmentStatus =
   | "pending"
@@ -93,7 +94,7 @@ export interface TimelineEvent {
   status: shipmentStatus;
   description?: string;
   location: string;
-  timestamp?: string;
+  timestamp: string;
 }
 
 interface TimelineProps {
@@ -137,7 +138,9 @@ export function Timeline({ events }: TimelineProps) {
             </div>
 
             <div className="flex-1 pb-6">
-              <p className="text-sm text-muted-foreground">{event.timestamp}</p>
+              <p className="text-sm text-muted-foreground">
+                {formatDateTime(event.timestamp)}
+              </p>
               <p className="mt-1">{event.description}</p>
               <p className="mt-1 text-sm text-muted-foreground flex items-center gap-1">
                 <MapPin className="w-4 h-4" />

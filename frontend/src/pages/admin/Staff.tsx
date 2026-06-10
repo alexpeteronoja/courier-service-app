@@ -3,12 +3,23 @@ import CreateStaff from "../../components/staff/CreateStaff";
 import { useOpenCreateStaffStore } from "../../zustandStores/openModalStore";
 import { useGetAllUser } from "../../datahooks/user/userHook";
 import type { StaffProps } from "../../components/staff/StaffTypes";
-import { StaffGridSkeleton } from "../../components/staff/StaffGridSkeleton";
+import { StaffGridSkeleton } from "../../components/skeleton/StaffGridSkeleton";
+import { useEffect } from "react";
 
 function Staff() {
-  const { isCreateStaffStoreOpen, openCreateStaffStore } =
-    useOpenCreateStaffStore();
+  const {
+    isCreateStaffStoreOpen,
+    openCreateStaffStore,
+    closeCreateStaffStore,
+  } = useOpenCreateStaffStore();
   const { getAllUser, getAllUserLoading } = useGetAllUser();
+
+  useEffect(() => {
+    return () => {
+      closeCreateStaffStore();
+    };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   return (
     <>

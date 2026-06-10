@@ -2,8 +2,11 @@ import { Link } from "react-router-dom";
 import { BellIcon, Dot, Menu, Package, SearchIcon } from "lucide-react";
 import { AvatarImg } from "../../assets";
 import { shortenText } from "../../utils/shortenText";
+import { useGetMe } from "../../datahooks/user/userHook";
 
 function AdminNavbar({ toggleSideBar }: { toggleSideBar: () => void }) {
+  const { getMe } = useGetMe();
+
   return (
     <>
       <nav className="z-40 fixed top-0 left-0 lg:left-71 right-0 bg-primary ">
@@ -64,7 +67,7 @@ function AdminNavbar({ toggleSideBar }: { toggleSideBar: () => void }) {
               </div>
 
               <div>
-                <p>{shortenText("Alex Peter onoja", 6)}</p>
+                <p>{shortenText(getMe?.name, 6)}</p>
 
                 <div className="flex gap-1 items-center mt-1">
                   <Dot className="w-2 h-2 rounded-full" />

@@ -7,6 +7,7 @@ import { useNavigate } from "react-router-dom";
 import { shortenText } from "../../utils/shortenText";
 import { useEditShipmentStore } from "../../zustandStores/openModalStore";
 import type { DashboardTableProps } from "./shipmentTypes";
+import { formatDate } from "../../utils/dateformat";
 
 function ShipmentTable({ filteredShipments }: DashboardTableProps) {
   const [deleteShipmentId, setDeleteShipmentId] = useState<string | null>(null);
@@ -71,11 +72,11 @@ function ShipmentTable({ filteredShipments }: DashboardTableProps) {
                       {shortenText(shipment.recipientName, 16)}
                     </td>
                     <td className="py-4 text-base text-muted-foreground">
-                      Abuja
+                      {shortenText(shipment.recipientAddress, 10)}
                     </td>
                     <td className="py-4">{shipment.status}</td>
                     <td className="py-4 text-base text-muted-foreground">
-                      10/60/2020
+                      {formatDate(shipment.createdAt)}
                     </td>
                     <td className="py-4">
                       <div

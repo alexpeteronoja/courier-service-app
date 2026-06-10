@@ -1,11 +1,19 @@
 import Cookies from "js-cookie";
 
-function withAuth() {
-  const userRole = "independent_artist"; // Cookies.get("userRole");
+type AuthResultType = {
+  isAuthenticated: boolean;
+  userRole: string | null;
+  accessToken: string | null;
+};
+
+function withAuth(): AuthResultType {
+  const userRole = Cookies.get("userRole") ?? null;
 
   // Get Token
 
-  const accessToken = userRole ? Cookies.get("userAccessToken") : null;
+  const accessToken = userRole
+    ? (Cookies.get("userAccessToken") ?? null)
+    : null;
 
   const isAuthenticated = !!accessToken;
 

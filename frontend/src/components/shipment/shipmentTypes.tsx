@@ -13,6 +13,7 @@ export type ShipmentFormDataTypes = {
   recipientAddress: string;
 
   packageDescription: string;
+  packageLocation: string;
   weight?: number;
   category: string;
 
@@ -26,6 +27,7 @@ export interface ShipmentTypes extends ShipmentFormDataTypes {
   recipientName: string;
   trackingCode: string;
   destination?: string | "";
+  createdAt: string;
   status: string;
   date: string;
 }

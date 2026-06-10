@@ -7,8 +7,10 @@ import type {
   LoginPayload,
   LoginResponse,
   AdminStaffSignupPayload,
+  UpdatePasswordPayload,
 } from "./authenticationtype";
 import type { createShipmentErrorResponse } from "../shipment/shipmenttype";
+import { useNavigate } from "react-router-dom";
 
 export const useAdminStaffSignUp = () => {
   const { mutate, mutateAsync, isPending, isError, isSuccess } = useMutation<
@@ -114,4 +116,50 @@ export const useUserLogin = () => {
     signinMutateAsync: mutateAsync,
     signinPending: isPending,
   };
+};
+
+// Update Password (Self)
+
+export const useUpdatePassword = () => {
+  const { mutate, mutateAsync, isPending, isError, isSuccess } = useMutation<
+    unknown,
+    AxiosError<createShipmentErrorResponse>,
+    UpdatePasswordPayload
+  >({
+    mutationFn: (data) => ApiInstance.patch("/auth/update-password", data),
+    onError: (err) => {
+      console.error("error", err?.response?.data);
+    },
+  });
+
+  return {
+    updatePasswordMutate: mutate,
+    updatePasswordMutateAsync: mutateAsync,
+    updatePasswordPending: isPending,
+    updatePasswordError: isError,
+    updatePasswordSuccess: isSuccess,
+  };
+};
+
+// Logout
+
+export const useLogOut = () => {
+  const navigate = useNavigate();
+
+  const { mutate, isPending } = useMutation<void, Error, void>({
+    mutationFn: async (): Promise<void> => {
+      Cookies.remove("userAccessToken");
+      Cookies.remove("userId");
+      Cookies.remove("userEmail");
+      Cookies.remove("userRole");
+    },
+    onSuccess: () => {
+      navigate("/admin");
+    },
+    onError: (err) => {
+      console.error(err);
+    },
+  });
+
+  return { logoutMutate: mutate, logoutPending: isPending };
 };

@@ -3,9 +3,10 @@ import SidebarLinks from "./SidebarLinks";
 import { Link } from "react-router-dom";
 import AdminNavbar from "../navbar/AdminNavbar";
 import { LogOut, Package, Settings, User, X } from "lucide-react";
+import { useLogOut } from "../../datahooks/authentication/authenticationHook";
 
 function Sidebar() {
-  //   const { logoutMutate } = useLogOut();
+  const { logoutMutate } = useLogOut();
   const [sideBarisOpen, setSideBarisOpen] = useState(false);
 
   return (
@@ -69,8 +70,10 @@ function Sidebar() {
             <div>
               <LogOut />
             </div>
-            {/* onClick={() => logoutMutate()} */}
-            <div className="font-medium">Logout</div>
+
+            <div onClick={() => logoutMutate()} className="font-medium">
+              Logout
+            </div>
           </div>
         </div>
       </div>

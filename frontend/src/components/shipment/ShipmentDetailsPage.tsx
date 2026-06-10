@@ -9,6 +9,7 @@ import {
 } from "lucide-react";
 import { Timeline, Info, PersonCard } from "./shipmentHelpers";
 import { useGetShipment } from "../../datahooks/shipment/shipmentHook";
+import { formatDateTime } from "../../utils/dateformat";
 
 export default function ShipmentDetailsPage() {
   const { shipmentId } = useParams<{ shipmentId: string }>();
@@ -81,7 +82,7 @@ export default function ShipmentDetailsPage() {
               <Info label="Ship Date" value="20/20/20" icon={Calendar} />
               <Info
                 label="Estimated Delivery"
-                value={shipment.estimatedDelivery}
+                value={formatDateTime(shipment.estimatedDelivery)}
                 icon={Calendar}
               />
               <Info label="Service" value="Express Delivery" icon={Package} />

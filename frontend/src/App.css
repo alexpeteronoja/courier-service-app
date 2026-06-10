@@ -10,6 +10,17 @@
   --color-textcol: #1e1e1e;
 }
 
+@keyframes fadeUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
 body {
   font-family: "Poppins", sans-serifs;
   font-weight: 400;

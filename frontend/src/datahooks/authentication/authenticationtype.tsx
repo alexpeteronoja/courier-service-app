@@ -24,3 +24,11 @@ export type AdminStaffSignupPayload = {
   password: string;
   passwordConfirm: string;
 };
+
+// Update Password (self)
+
+export type UpdatePasswordPayload = {
+  currentPassword: string;
+  newPassword: string;
+  confirmNewPassword: string;
+};

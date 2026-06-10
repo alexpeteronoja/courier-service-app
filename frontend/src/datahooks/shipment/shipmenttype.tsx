@@ -9,6 +9,7 @@ export type createShipmentPayload = {
   recipientAddress: string;
 
   packageDescription: string;
+  packageLocation: string;
   weight?: number;
   category: string;
 
@@ -35,5 +36,6 @@ export type addTrackingEventPayload = {
   data: {
     status?: string;
     description: string;
+    location: string;
   };
 };

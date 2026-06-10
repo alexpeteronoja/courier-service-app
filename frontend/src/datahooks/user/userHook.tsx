@@ -2,7 +2,7 @@ import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import ApiInstance from "../../api/ApiInstance";
 import type { AxiosError } from "axios";
 import type { createShipmentErrorResponse } from "../shipment/shipmenttype";
-import type { deactivateUserPayload } from "./userhooktype";
+import type { deactivateUserPayload, updateMePayload } from "./userhooktype";
 
 // Get All Users
 
@@ -23,6 +23,55 @@ export const useGetAllUser = () => {
     getAllUser: data?.data?.user,
     getAllUserLoading: isLoading,
     getAllUserError: isError,
+  };
+};
+
+// Get Me (User Self)
+
+export const useGetMe = () => {
+  const { data, isLoading, isError } = useQuery({
+    queryKey: ["getMe"],
+    queryFn: async () => {
+      try {
+        const response = await ApiInstance.get("/user/me");
+        return response?.data || [];
+      } catch (err) {
+        console.error(err);
+      }
+    },
+  });
+
+  return {
+    getMe: data?.data?.user,
+    getMeLoading: isLoading,
+    getMeError: isError,
+  };
+};
+
+// Edit Me (User Self)
+
+export const useUpdateMe = () => {
+  const queryClient = useQueryClient();
+
+  const { mutate, mutateAsync, isPending, isError, isSuccess } = useMutation<
+    unknown,
+    AxiosError<createShipmentErrorResponse>,
+    updateMePayload
+  >({
+    mutationFn: (data) => ApiInstance.patch("/user/me", data),
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["getMe"] });
+    },
+    onError: (err) => {
+      console.error("Error", err?.response?.data?.data?.message);
+    },
+  });
+  return {
+    updateMeMutate: mutate,
+    updateMeMutateAsync: mutateAsync,
+    updateMePending: isPending,
+    updateMeError: isError,
+    updateMeSuccess: isSuccess,
   };
 };
 
