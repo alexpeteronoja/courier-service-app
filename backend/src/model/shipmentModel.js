@@ -25,16 +25,20 @@ const trackingEventSchema = new mongoose.Schema(
       trim: true,
       maxlength: [500, 'Description cannot exceed 500 characters'],
     },
-    // location: {
-    //   city: { type: String, trim: true },
-    //   state: { type: String, trim: true },
-    //   country: { type: String, trim: true, default: 'Nigeria' },
-    //   // facility: { type: String, trim: true }, // e.g. "Lagos Sorting Hub"
-    //   // coordinates: {
-    //   //   lat: { type: Number },
-    //   //   lng: { type: Number },
-    //   // },
-    // },
+    location: {
+      type: String,
+      required: [true, 'Event Location is required'],
+      trim: true,
+      maxlength: [300, 'Location cannot exceed 300 characters'],
+      // city: { type: String, trim: true },
+      // state: { type: String, trim: true },
+      // country: { type: String, trim: true, default: 'Nigeria' },
+      // facility: { type: String, trim: true }, // e.g. "Lagos Sorting Hub"
+      // coordinates: {
+      //   lat: { type: Number },
+      //   lng: { type: Number },
+      // },
+    },
     handler: {
       // Staff member who logged this event
       userId: { type: mongoose.Schema.Types.ObjectId, ref: 'User' },
@@ -102,7 +106,13 @@ const shipmentSchema = new mongoose.Schema(
     senderAddress: {
       type: String,
       trim: true,
+      required: [true, 'Please Enter Senders Address'],
     },
+    // senderLocation: {
+    //   type: String,
+    //   trim: true,
+    //   required: [true, 'Please Enter Senders Location'],
+    // },
 
     // Recipient information
 
@@ -128,6 +138,12 @@ const shipmentSchema = new mongoose.Schema(
       trim: true,
       required: [true, 'Please Enter Recipient Address'],
     },
+
+    // recipientLocation: {
+    //   type: String,
+    //   trim: true,
+    //   required: [true, 'Please Enter Recipient Location '],
+    // },
 
     // Package Information
 

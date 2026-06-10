@@ -43,6 +43,9 @@ export const updateMe = catchAsync(async (req, res, next) => {
   const { password, passwordConfirm, role, email, isActive, ...updatedData } =
     req.body;
 
+  if (password || passwordConfirm)
+    return next(new AppError('You are not allowed to do this here.', 400));
+
   const user = await User.findByIdAndUpdate(req.user._id, updatedData, {
     new: true,
     runValidators: true,

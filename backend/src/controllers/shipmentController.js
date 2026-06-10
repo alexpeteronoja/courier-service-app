@@ -13,6 +13,7 @@ export const createShipment = catchAsync(async (req, res, next) => {
       {
         status: 'pending',
         description: 'Shipment registered and tracking code generated.',
+        location: req.body.packageLocation,
         handler: {
           userId: req.user._id,
           name: req.user.name,
@@ -116,11 +117,13 @@ export const deleteShipment = catchAsync(async (req, res, next) => {
 
 export const addTrackingEvent = catchAsync(async (req, res, next) => {
   const { shipmentId } = req.params;
-  const { status, description, notes } = req.body;
+  const { status, description, notes, location } = req.body;
 
   // const shipment = await Shipment.findOne({
   //   trackingCode: trackingCode.toUpperCase(),
   // });
+
+  console.log(location);
 
   const shipment = await Shipment.findById(shipmentId);
   if (!shipment) return next(new AppError(`No shipment found`, 404));
@@ -129,6 +132,7 @@ export const addTrackingEvent = catchAsync(async (req, res, next) => {
   const newEvent = {
     status,
     description,
+    location,
     handler: {
       userId: req.user._id,
       name: req.user.name,
