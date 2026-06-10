@@ -1,7 +1,7 @@
 import axios from "axios";
 import Cookies from "js-cookie";
 
-const api = "http://localhost:3000/api/v1"; // "https://courier-service-app-he8z.onrender.com/api/v1"; ;
+const api = "https://courier-service-app-he8z.onrender.com/api/v1";
 
 const ApiInstance = axios.create({
   baseURL: api,
