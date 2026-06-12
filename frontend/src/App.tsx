@@ -13,9 +13,10 @@ import ShipmentDetails from "./pages/admin/ShipmentDetails";
 import Staff from "./pages/admin/Staff";
 import Profile from "./pages/admin/Profile";
 import Settings from "./pages/admin/Settings";
-import Testing from "./pages/Testing";
 import TrackParcel from "./pages/landingPage/TrackParcel";
 import ProtectRoutes from "./pages/ProtectRoutes";
+import AboutPage from "./pages/landingPage/AboutPage";
+import Contact from "./pages/landingPage/Contact";
 
 function App() {
   return (
@@ -25,7 +26,9 @@ function App() {
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/admin" element={<Login />} />
-          <Route path="/testing" element={<Testing />} />
+          <Route path="/about" element={<AboutPage />} />
+          <Route path="/contact" element={<Contact />} />
+
           <Route path="/track-parcel/" element={<TrackParcel />} />
           <Route path="/track-parcel/:trackingId" element={<TrackParcel />} />
 

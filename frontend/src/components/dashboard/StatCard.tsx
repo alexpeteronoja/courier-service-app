@@ -1,21 +1,18 @@
-import { type LucideIcon } from "lucide-react";
-
 interface stattype {
   header: string;
   content: string;
-  image: LucideIcon;
 }
 
-function StatCard({ header, content, image: Icon }: stattype) {
+function StatCard({ header, content }: stattype) {
   return (
     <div className="bg-primary text-white flex justify-between items-center p-5 md:p-6 w-full rounded-lg shadow-sm">
       <div>
         <p className="text-xs md:text-sm">{header}</p>
         <p className="text-lg md:text-2xl mt-2">{content}</p>
       </div>
-      <div className="bg-primary/10 text-primary p-3 rounded-lg">
+      {/* <div className="bg-primary/10 text-primary p-3 rounded-lg">
         <Icon className="w-6 h-6" />
-      </div>
+      </div> */}
     </div>
   );
 }

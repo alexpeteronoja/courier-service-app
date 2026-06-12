@@ -1,18 +1,19 @@
-import { Dashdata } from "../../data/Dashdata";
 import StatCard from "../../components/dashboard/StatCard";
-import DashboardTable from "../../components/dashboard/DashboardTable";
-import { recentShipments } from "../../data/RecentShipments";
-import { useState } from "react";
+
+import { useGetOverview } from "../../datahooks/dashboard/dashboardHook";
+import Skeleton from "react-loading-skeleton";
 
 function Dashboard() {
-  const [searchQuery, setSearchQuery] = useState("");
+  const { getOverview, getOverviewLoading } = useGetOverview();
 
-  const filteredShipments = recentShipments.filter(
-    (shipment) =>
-      shipment.id.toLowerCase().includes(searchQuery.toLowerCase()) ||
-      shipment.receiver.toLowerCase().includes(searchQuery.toLowerCase()) ||
-      shipment.destination.toLowerCase().includes(searchQuery.toLowerCase()),
-  );
+  const overviewArray: { key: string; value: unknown }[] = Object.entries(
+    getOverview ?? {},
+  )
+    .filter(([key]) => key !== "_id")
+    .map(([key, value]) => ({
+      key,
+      value,
+    }));
 
   return (
     <>
@@ -25,32 +26,20 @@ function Dashboard() {
         </div>
 
         <div className="grid grid-cols-2 md:grid-cols-4 gap-6 mb-8">
-          {Dashdata.map((item) => (
-            <div key={item.header}>
-              <StatCard {...item} />
-            </div>
-          ))}
-        </div>
-
-        <div className="bg-white p-6 rounded-md">
-          <div className="w-full flex items-center justify-between">
-            <h3 className="text-lg font-semibold font-nunito">
-              Recent Shipments
-            </h3>
-
-            <div className="w-72">
-              <input
-                type="text"
-                placeholder="Search shipments..."
-                value={searchQuery}
-                onChange={(e) => setSearchQuery(e.target.value)}
-                className="h-9  border  focus:border-primary w-full px-4 outline rounded-2xl "
-              />
-            </div>
-          </div>
-
-          {/* Dashboard Table */}
-          <DashboardTable filteredShipments={filteredShipments} />
+          {getOverviewLoading ? (
+            <Skeleton
+              width={80}
+              height={12}
+              baseColor="#2d2a6e"
+              highlightColor="#3b368a"
+            />
+          ) : (
+            overviewArray?.map((item) => (
+              <div key={item.key}>
+                <StatCard header={item.key} content={String(item.value)} />
+              </div>
+            ))
+          )}
         </div>
       </div>
     </>

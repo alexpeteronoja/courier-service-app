@@ -1,3 +1,4 @@
+import { Link } from "react-router-dom";
 import { ServiceData } from "../../data/ServiceData";
 
 function Services() {
@@ -44,7 +45,7 @@ function Services() {
                 </p>
 
                 <p className="mt-5 text-sm text-accent font-semibold">
-                  Learn More
+                  <Link to="/about">Learn More</Link>
                 </p>
               </div>
             ))}

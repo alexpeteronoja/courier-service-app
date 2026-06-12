@@ -56,7 +56,7 @@ function LandingNavbar() {
                 Track a Parcel
               </Link>
 
-              <Link to="/features" className="hover:text-blue-500">
+              <Link to="/contact" className="hover:text-blue-500">
                 Contact
               </Link>
 
@@ -93,14 +93,14 @@ function LandingNavbar() {
             About
           </Link>
           <Link
-            to="/courses"
+            to="/track-parcel"
             state={{ scrollTo: "project-section" }}
             className="block  hover:text-blue-500"
           >
-            Courses
+            Track a Parcel
           </Link>
-          <Link to="/features" className="block  hover:text-blue-500">
-            Features
+          <Link to="/contact" className="block  hover:text-blue-500">
+            Contact
           </Link>
         </div>
       </nav>

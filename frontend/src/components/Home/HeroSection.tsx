@@ -53,7 +53,10 @@ function HeroSection() {
         </p>
 
         <div className="mt-8 flex flex-wrap gap-3 justify-center">
-          <button className="font-poppins cursor-pointer bg-accent hover:bg-[#d46509] text-white px-7 py-3 rounded-lg font-medium transition">
+          <button
+            onClick={() => navigate("/contact")}
+            className="font-poppins cursor-pointer bg-accent hover:bg-[#d46509] text-white px-7 py-3 rounded-lg font-medium transition"
+          >
             Contact Us
           </button>
           <button

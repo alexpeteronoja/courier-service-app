@@ -46,10 +46,6 @@ function ShipmentPage() {
 
         <div className="bg-white p-6 rounded-md">
           <div className="w-full flex items-center justify-between">
-            <h3 className="text-lg font-semibold font-nunito">
-              Recent Shipments
-            </h3>
-
             <div className="w-72">
               <input
                 type="text"

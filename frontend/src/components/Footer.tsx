@@ -1,4 +1,5 @@
 import { Package, Mail, Phone, MapPin } from "lucide-react";
+import { Link } from "react-router-dom";
 
 function Footer() {
   return (
@@ -20,60 +21,44 @@ function Footer() {
             <h3 className="text-white text-lg mb-4">Quick Links</h3>
             <ul className="space-y-2">
               <li>
-                <a
-                  href="#features"
+                <Link
+                  to="/track-parcel"
                   className="hover:text-blue-400 transition-colors"
                 >
-                  Features
-                </a>
+                  Track a Parcel
+                </Link>
               </li>
               <li>
-                <a
-                  href="#services"
+                <Link
+                  to="/contact"
                   className="hover:text-blue-400 transition-colors"
                 >
-                  Services
-                </a>
+                  Contact us
+                </Link>
               </li>
               <li>
-                <a
-                  href="#how-it-works"
+                <Link
+                  to="/about"
                   className="hover:text-blue-400 transition-colors"
                 >
-                  How It Works
-                </a>
+                  About
+                </Link>
               </li>
-              <li>
+              {/* <li>
                 <a href="#" className="hover:text-blue-400 transition-colors">
                   Pricing
                 </a>
-              </li>
+              </li> */}
             </ul>
           </div>
 
           <div>
             <h3 className="text-white text-lg mb-4">Services</h3>
             <ul className="space-y-2">
-              <li>
-                <a href="#" className="hover:text-blue-400 transition-colors">
-                  Same-Day Delivery
-                </a>
-              </li>
-              <li>
-                <a href="#" className="hover:text-blue-400 transition-colors">
-                  International Shipping
-                </a>
-              </li>
-              <li>
-                <a href="#" className="hover:text-blue-400 transition-colors">
-                  Express Delivery
-                </a>
-              </li>
-              <li>
-                <a href="#" className="hover:text-blue-400 transition-colors">
-                  Freight Services
-                </a>
-              </li>
+              <li>Same-Day Delivery</li>
+              <li>International Shipping</li>
+              <li>Express Delivery</li>
+              <li>Freight Services</li>
             </ul>
           </div>
 
@@ -82,11 +67,29 @@ function Footer() {
             <ul className="space-y-3">
               <li className="flex items-center gap-2">
                 <Phone className="h-4 w-4" />
-                <span className="text-sm">1-800-COURIER</span>
+                <span className="text-sm">
+                  <a
+                    href="tel:+447448338490"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="hover:text-blue-400 transition-colors"
+                  >
+                    +447448338490
+                  </a>
+                </span>
               </li>
               <li className="flex items-center gap-2">
                 <Mail className="h-4 w-4" />
-                <span className="text-sm">support@FastLink.com</span>
+                <span className="text-sm">
+                  <a
+                    href="mailto:support@FastLink.com"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="hover:text-blue-400 transition-colors"
+                  >
+                    support@FastLink.com
+                  </a>
+                </span>
               </li>
               <li className="flex items-start gap-2">
                 <MapPin className="h-4 w-4 mt-1" />
