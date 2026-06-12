@@ -242,6 +242,7 @@ shipmentSchema.pre(/^find/, function () {
 });
 
 shipmentSchema.index({ trackingCode: 1, createdAt: -1 });
+shipmentSchema.index({ isArchived: 1, status: 1 });
 
 const Shipment = mongoose.model('Shipment', shipmentSchema);
 

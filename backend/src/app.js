@@ -7,6 +7,7 @@ import { errorController } from './controllers/errorController.js';
 import morgan from 'morgan';
 import { shipmentRouter } from './routes/shipmentRoutes.js';
 import { authRouter } from './routes/authRoutes.js';
+import { dashboardRouter } from './routes/dashboardRoutes.js';
 
 const app = express();
 
@@ -22,6 +23,7 @@ if (process.env.NODE_ENV === 'development') {
 app.use('/api/v1/auth', authRouter);
 app.use('/api/v1/user', userRouter);
 app.use('/api/v1/shipment', shipmentRouter);
+app.use('/api/v1/dashboard', dashboardRouter);
 
 app.use(errorController);
 
