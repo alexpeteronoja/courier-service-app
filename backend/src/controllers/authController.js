@@ -44,7 +44,7 @@ export const login = catchAsync(async (req, res, next) => {
   // Check if User is Active
 
   if (!user.isActive) {
-    return next(new AppError('User Deactivated. Contact Admin', 401));
+    return next(new AppError('User Deactivated. Contact Admin', 400));
   }
 
   // return token if everything is ok
