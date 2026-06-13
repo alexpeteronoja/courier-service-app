@@ -11,7 +11,14 @@ import { dashboardRouter } from './routes/dashboardRoutes.js';
 
 const app = express();
 
-app.use(cors({ origin: 'http://localhost:5173' }));
+app.use(
+  cors({
+    origin: [
+      'https://courier-service-app-sage.vercel.app',
+      'http://localhost:5173',
+    ],
+  }),
+);
 
 app.use(express.json());
 
