@@ -99,6 +99,10 @@ export const protect = catchAsync(async (req, res, next) => {
     );
   }
 
+  if (!user.isActive) {
+    return next(new AppError('User Deactivated. Contact Admin'), 401);
+  }
+
   req.user = user;
 
   next();
