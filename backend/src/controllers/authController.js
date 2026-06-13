@@ -41,6 +41,12 @@ export const login = catchAsync(async (req, res, next) => {
     return next(new AppError('incorrect email or password', 400));
   }
 
+  // Check if User is Active
+
+  if (!user.isActive) {
+    return next(new AppError('User Deactivated. Contact Admin', 401));
+  }
+
   // return token if everything is ok
 
   const accessToken = signToken(user._id);
