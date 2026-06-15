@@ -11,14 +11,14 @@ export const ChannelsData: ContactChannel[] = [
   {
     icon: Mail,
     label: "Email Us",
-    value: "hello@swiftex.ng",
+    value: "hello@fastlink.com",
     sub: "We reply within 2 business hours",
   },
   {
     icon: MapPin,
     label: "Head Office",
-    value: "14 Admiralty Way, Lekki Phase 1",
-    sub: "Lagos, Nigeria",
+    value: "22 Baker Street Marylebone, London",
+    sub: "London UK",
   },
   {
     icon: Clock,

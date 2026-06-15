@@ -249,9 +249,9 @@ const Contact: FC = () => {
                   <MapPin size={26} className="text-white" />
                 </div>
                 <p className="font-bold text-white">
-                  14 Admiralty Way, Lekki Phase 1
+                  22 Baker Street Marylebone, London
                 </p>
-                <p className="text-sm text-white/60">Lagos, Nigeria</p>
+                <p className="text-sm text-white/60">London UK</p>
                 <a
                   href="https://maps.google.com"
                   target="_blank"
