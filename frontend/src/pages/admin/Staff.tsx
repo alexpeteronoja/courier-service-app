@@ -42,7 +42,7 @@ function Staff() {
           {getAllUserLoading ? (
             <StaffGridSkeleton />
           ) : (
-            <div className="grid grid-cols-3 gap-3.5">
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-3.5">
               {getAllUser.map((item: StaffProps) => (
                 <StaffCard
                   userId={item._id}
