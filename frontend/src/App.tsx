@@ -17,6 +17,7 @@ import TrackParcel from "./pages/landingPage/TrackParcel";
 import ProtectRoutes from "./pages/ProtectRoutes";
 import AboutPage from "./pages/landingPage/AboutPage";
 import Contact from "./pages/landingPage/Contact";
+import CustomerReceipt from "./components/Printing/CustomerReceipt";
 
 function App() {
   return (
@@ -31,6 +32,11 @@ function App() {
 
           <Route path="/track-parcel/" element={<TrackParcel />} />
           <Route path="/track-parcel/:trackingId" element={<TrackParcel />} />
+
+          <Route
+            path="/customer-receipt/:shipmentId"
+            element={<CustomerReceipt />}
+          />
 
           {/* Admin Routes */}
 

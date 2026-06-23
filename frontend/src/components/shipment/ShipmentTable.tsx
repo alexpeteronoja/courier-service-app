@@ -1,4 +1,11 @@
-import { Eye, FilePenLine, Loader2, Search, Trash2 } from "lucide-react";
+import {
+  Eye,
+  FilePenLine,
+  Loader2,
+  Printer,
+  Search,
+  Trash2,
+} from "lucide-react";
 import { useDeleteShipment } from "../../datahooks/shipment/shipmentHook";
 import { notifyError, notifySuccess } from "../../utils/toast";
 import axios from "axios";
@@ -29,6 +36,21 @@ function ShipmentTable({ filteredShipments }: DashboardTableProps) {
         console.log(err);
       }
     }
+  };
+
+  const handlePrintReceipt = (shipmentId: string) => {
+    window.open(
+      `/customer-receipt/${shipmentId}`,
+      "_blank",
+      `
+      width=400,
+      height=700,
+      left=200,
+      top=100,
+      resizable=yes,
+      scrollbars=yes
+    `,
+    );
   };
 
   return (
@@ -99,6 +121,14 @@ function ShipmentTable({ filteredShipments }: DashboardTableProps) {
                           title="Edit product"
                         >
                           <FilePenLine />
+                        </button>
+
+                        <button
+                          className="p-1.5 rounded-lg text-gray-400 hover:text-primary hover:bg-[#f4faf0] transition-colors cursor-pointer hover:scale-110 duration-300"
+                          title="Print Product"
+                          onClick={() => handlePrintReceipt(shipment._id)}
+                        >
+                          <Printer />
                         </button>
 
                         <button
